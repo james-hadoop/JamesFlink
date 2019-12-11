@@ -1,6 +1,6 @@
 # JamesFlink
 
-### sokcet stream data source
+### socket stream data source
 ```
 nc -lk 7777
 ```
