@@ -1,4 +1,4 @@
-package com.james.flink
+package com.james.flink.wc
 
 import org.apache.flink.streaming.api.scala._
 
