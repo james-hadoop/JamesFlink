@@ -21,8 +21,8 @@ object SourceTest {
     // stream1.print("stream1").setParallelism(1)
 
     // 2. 从文件中读取数据
-    val stream2 = env.readTextFile("/home/james/workspace/JamesFlink/src/main/resources/sensor.txt")
-    //    stream2.print("stream2").setParallelism(1)
+    val stream2 = env.readTextFile("src/main/resources/sensor.txt")
+    stream2.print("stream2").setParallelism(1)
 
     // 3. 从Kafka中读取数据
     val properties = new Properties()
@@ -34,10 +34,10 @@ object SourceTest {
 
 
     val stream3 = env.addSource(new FlinkKafkaConsumer011[String]("sensor", new SimpleStringSchema(), properties))
-    stream3.print("stream3").setParallelism(1)
+//    stream3.print("stream3").setParallelism(1)
 
     // 启动执行环境
-    //    env.execute("SourceTest")
+    env.execute("SourceTest")
   }
 }
 
