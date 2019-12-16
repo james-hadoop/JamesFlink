@@ -36,6 +36,8 @@ object SourceTest {
     val stream3 = env.addSource(new FlinkKafkaConsumer011[String]("sensor", new SimpleStringSchema(), properties))
     stream3.print("stream3").setParallelism(1)
 
+    // 4. 自定义Source
+
     // 启动执行环境
     //    env.execute("SourceTest")
   }
