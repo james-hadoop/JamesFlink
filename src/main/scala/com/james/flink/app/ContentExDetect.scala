@@ -31,7 +31,7 @@ object ContentExDetect {
     env.setParallelism(1)
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
 
-    val resource = getClass.getResource("/01.txt")
+    val resource = getClass.getResource("/data/01.txt")
     val dataStream = env.readTextFile(resource.getPath).filter(_ != null).filter(_.length > 1)
       .map(data => {
         val dataArray = data.split("\\t")
