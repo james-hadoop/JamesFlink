@@ -5,11 +5,15 @@ import java.util.Properties
 import org.apache.flink.api.common.serialization.SimpleStringSchema
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011
+import org.slf4j.LoggerFactory
 
 case class SensorReading(id: String, timestamp: Long, temperature: Double)
 
 object SourceTest {
+  private val LOG = LoggerFactory.getLogger(SourceTest.getClass)
+
   def main(args: Array[String]): Unit = {
+    LOG.info("SourceTest start...")
     val env = StreamExecutionEnvironment.getExecutionEnvironment
 
     // 1. 从集合中读取数据
@@ -33,10 +37,12 @@ object SourceTest {
     properties.setProperty("auto.offset.reset", "latest")
 
 
-//    val stream3 = env.addSource(new FlinkKafkaConsumer011[String]("sensor", new SimpleStringSchema(), properties))
-//    stream3.print("stream3").setParallelism(1)
+    //    val stream3 = env.addSource(new FlinkKafkaConsumer011[String]("sensor", new SimpleStringSchema(), properties))
+    //    stream3.print("stream3").setParallelism(1)
 
     // 4. 自定义Source
+    val stream4 = env.addSource(new MysqlThresholdSource())
+    stream4.print()
 
     // 启动执行环境
     env.execute("SourceTest")
