@@ -1,4 +1,4 @@
-package com.james.flink.apitest
+package com.james.flink.flink_source
 
 import java.util.Properties
 
@@ -21,7 +21,7 @@ object SourceTest {
     // stream1.print("stream1").setParallelism(1)
 
     // 2. 从文件中读取数据
-    val stream2 = env.readTextFile("src/main/resources/sensor.txt")
+    val stream2 = env.readTextFile("src/main/resources/data/sensor.txt")
     stream2.print("stream2").setParallelism(1)
 
     // 3. 从Kafka中读取数据
@@ -33,7 +33,7 @@ object SourceTest {
     properties.setProperty("auto.offset.reset", "latest")
 
 
-    val stream3 = env.addSource(new FlinkKafkaConsumer011[String]("sensor", new SimpleStringSchema(), properties))
+//    val stream3 = env.addSource(new FlinkKafkaConsumer011[String]("sensor", new SimpleStringSchema(), properties))
 //    stream3.print("stream3").setParallelism(1)
 
     // 4. 自定义Source

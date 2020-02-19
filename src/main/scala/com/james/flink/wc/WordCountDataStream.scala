@@ -1,9 +1,15 @@
 package com.james.flink.wc
 
 import org.apache.flink.streaming.api.scala._
+import org.slf4j.LoggerFactory
 
 object WordCountDataStream {
+  val LOG = LoggerFactory.getLogger(WordCountDataSet.getClass)
+
+
   def main(args: Array[String]): Unit = {
+    LOG.info(WordCountDataStream.getClass.getName + " start...")
+
     val env = StreamExecutionEnvironment.getExecutionEnvironment
 
     val dataStream = env.socketTextStream("localhost", 7777)
