@@ -80,7 +80,7 @@ object ContentExDetect {
       })
       .map(new ParseSrcAuditCntMapFunction())
       .keyBy(_.src)
-      .timeWindow(Time.minutes(100), Time.minutes(100))
+      .timeWindow(Time.minutes(10), Time.minutes(10))
       .allowedLateness(Time.minutes(60))
       .aggregate(new SrcCntAggFunction(), new SrcCntWindowFunction())
       .keyBy(_.windowEnd)
