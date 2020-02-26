@@ -21,6 +21,7 @@ class MysqlExOutputSink extends RichSinkFunction[SrcQiyongExCntOutput] {
   private var insertStmt: PreparedStatement = _
 
   override def open(parameters: Configuration): Unit = {
+    LOG.error("called open()")
     super.open(parameters)
 
     // 初始化Mysql连接
@@ -39,6 +40,7 @@ class MysqlExOutputSink extends RichSinkFunction[SrcQiyongExCntOutput] {
   }
 
   override def close(): Unit = {
+    LOG.error("called close()")
     super.close()
 
     try {
@@ -73,7 +75,8 @@ class MysqlExOutputSink extends RichSinkFunction[SrcQiyongExCntOutput] {
     * @param ctx
     */
   override def invoke(value: SrcQiyongExCntOutput, ctx: SinkFunction.Context[_]): Unit = {
-    println("invoke()>>> " + value.src + " -> " + value.currentCnt + " -> " + value.updateTs)
+    LOG.error("called invoke()")
+    LOG.error("invoke()>>> " + value.src + " -> " + value.currentCnt + " -> " + value.updateTs)
 
     try {
       insertStmt.setInt(1, value.src.toInt)

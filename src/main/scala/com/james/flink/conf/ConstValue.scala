@@ -100,9 +100,9 @@ object ConstValue {
   val THRESHOLD_UPDATE_TIME_FIELD = "update_time"
 
   /**
-    * 异常启用量阈值更新周期：每小时
+    * 异常启用量阈值更新周期：毫秒
     */
-  val THRESHOLD_UPDATE_INTERVAL = 10000
+  val THRESHOLD_UPDATE_INTERVAL = 10000000
 
   /**
     * 当前启用量

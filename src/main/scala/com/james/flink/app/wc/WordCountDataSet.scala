@@ -1,4 +1,4 @@
-package com.james.flink.wc
+package com.james.flink.app.wc
 
 import org.apache.flink.api.scala._
 import org.slf4j.LoggerFactory

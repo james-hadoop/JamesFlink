@@ -42,3 +42,4 @@ class ExDetectFunction() extends ProcessFunction[mutable.HashMap[Long, SrcQiyong
     }
   }
 }
+

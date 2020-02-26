@@ -21,6 +21,9 @@ object JsonUtil {
       if (null == fieldValueMap) return null
     } catch {
       case e: Exception =>
+        LOG.error(('x'*120).toString)
+        LOG.error(jsonString)
+        LOG.error(('x'*120).toString)
         LOG.error(e.getMessage)
     }
 

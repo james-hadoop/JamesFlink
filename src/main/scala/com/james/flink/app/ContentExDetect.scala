@@ -1,6 +1,7 @@
 package com.james.flink.app
 
 import com.james.flink.conf._
+import com.james.flink.flink_map.LogFilterMap
 import com.james.flink.flink_sink.MysqlExOutputSink
 import com.james.flink.flink_source.MysqlThresholdSource
 import com.james.flink.functions.{ParseSrcAuditCntMapFunction, SrcCntAggFunction, SrcCntKeyedProcessFunction, SrcCntWindowFunction, SrcThresholdBroadcastProcessFunction}
@@ -31,13 +32,20 @@ object ContentExDetect {
     env.setParallelism(1)
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
 
-    val resource = getClass.getResource("/data/01.txt")
-    val dataStream = env.readTextFile(resource.getPath).filter(_ != null).filter(_.length > 1)
-      .map(data => {
-        val dataArray = data.split("\\t")
-        LOG.debug("Log04620>>> " + (dataArray(0).trim, dataArray(1).trim, dataArray(2).trim, dataArray(3).trim.toLong, dataArray(4).trim, dataArray(5).trim, dataArray(6).trim, dataArray(7), dataArray(8).trim, dataArray(9).trim, dataArray(10).trim))
-        Log04620(dataArray(0).trim, dataArray(1).trim, dataArray(2).trim, dataArray(3).trim.toLong, dataArray(4).trim, dataArray(5).trim, dataArray(6).trim, dataArray(7), dataArray(8).trim, dataArray(9).trim, dataArray(10).trim)
-      })
+    val resource = getClass.getResource("/data/20200220_10.txt")
+    val dataStream = env.readTextFile(resource.getPath).filter(_ != null).filter(_.length > 1).filter(false == _.contains("MISSING"))
+      //      .map(data => {
+      //        val dataArray = data.split("\\
+      //
+      //
+      //
+      //
+      //
+      //        t")
+      //        LOG.error("Log04620>>> " + (dataArray(0).trim, dataArray(1).trim, dataArray(2).trim, dataArray(3).trim.toLong, dataArray(4).trim, dataArray(5).trim, dataArray(6).trim, dataArray(7), dataArray(8).trim, dataArray(9).trim, dataArray(10).trim))
+      //        Log04620(dataArray(0).trim, dataArray(1).trim, dataArray(2).trim, dataArray(3).trim.toLong, dataArray(4).trim, dataArray(5).trim, dataArray(6).trim, dataArray(7), dataArray(8).trim, dataArray(9).trim, dataArray(10).trim)
+      //      })
+      .map(new LogFilterMap).filter(_.rowkey!="")
       .assignTimestampsAndWatermarks(new BoundedOutOfOrdernessTimestampExtractor[Log04620](Time.seconds(1)) {
         override def extractTimestamp(element: Log04620): Long = {
           element.ts
