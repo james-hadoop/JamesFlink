@@ -26,12 +26,9 @@ class SrcThresholdBroadcastProcessFunction extends BroadcastProcessFunction[muta
     val stateMap = ctx.getBroadcastState(thresholdStateDesc)
     val stateMapIter = stateMap.immutableEntries().iterator()
 
-    println("\t"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(ctx.timestamp()))
-
-
     while (stateMapIter.hasNext) {
       val entry = stateMapIter.next()
-      LOG.warn("\t >>>: " + entry.getKey + " -> " + entry.getValue.src + "@" + entry.getValue.lowCnt + "-" + entry.getValue.highCnt)
+      LOG.warn(">>>: " + entry.getKey + " -> " + entry.getValue.src + "@" + entry.getValue.lowCnt + "-" + entry.getValue.highCnt)
       cntThresholdMap.put(entry.getKey, entry.getValue)
     }
 
@@ -41,7 +38,7 @@ class SrcThresholdBroadcastProcessFunction extends BroadcastProcessFunction[muta
 //      println("\t processElement(): " + entry._1 + " -> " + entry._2)
 
       if (null != cntThresholdMap.get(entry._1) && cntThresholdMap.get(entry._1).highCnt < entry._1) {
-        val srcQiyongEx = new SrcQiyongExCntOutput(entry._1, entry._2, cntThresholdMap.get(entry._1).lowCnt, cntThresholdMap.get(entry._1).highCnt, new Date())
+        val srcQiyongEx = new SrcQiyongExCntOutput(entry._1, entry._2, cntThresholdMap.get(entry._1).lowCnt, cntThresholdMap.get(entry._1).highCnt, ctx.timestamp(), new Date().getTime)
         LOG.warn(">>> srcQiyongExCntThreshold: " + srcQiyongEx)
         out.collect(srcQiyongEx)
       }

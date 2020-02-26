@@ -1,6 +1,6 @@
 package com.james.flink.flink_sink
 
-import java.sql.{Connection, DriverManager, PreparedStatement}
+import java.sql.{Connection, DriverManager, PreparedStatement, Timestamp}
 
 import com.james.flink.conf.{ConstConfig, SrcQiyongExCntOutput}
 import org.apache.flink.configuration.Configuration
@@ -29,7 +29,7 @@ class MysqlExOutputSink extends RichSinkFunction[SrcQiyongExCntOutput] {
     try {
       conn = DriverManager.getConnection(ConstConfig.MYSQL_URL, ConstConfig.MYSQL_USERNAME, ConstConfig.MYSQL_PASSWORD)
 
-      insertStmt = conn.prepareStatement("insert into " + ConstConfig.MYSQL_TABLE_OUTPUT + " (src, current_cnt, low_cnt, high_cnt, update_time) VALUES(?,?,?,?,?)")
+      insertStmt = conn.prepareStatement("insert into " + ConstConfig.MYSQL_TABLE_OUTPUT + " (src, current_cnt, low_cnt, high_cnt, event_time, update_time) VALUES(?,?,?,?,?,?)")
     } catch {
       case ex: Exception => {
         LOG.error("failed to connect to mysql:url={}", ConstConfig.MYSQL_URL)
@@ -83,7 +83,8 @@ class MysqlExOutputSink extends RichSinkFunction[SrcQiyongExCntOutput] {
       insertStmt.setLong(2, value.currentCnt)
       insertStmt.setLong(3, value.lowCnt)
       insertStmt.setLong(4, value.highCnt)
-      insertStmt.setDate(5, new java.sql.Date(value.updateTs.getTime))
+      insertStmt.setTimestamp(5, new Timestamp((value.eventTs)))
+      insertStmt.setTimestamp(6, new Timestamp((value.updateTs)))
 
       insertStmt.execute()
     } catch {

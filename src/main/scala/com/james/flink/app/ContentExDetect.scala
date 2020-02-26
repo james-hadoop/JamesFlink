@@ -32,7 +32,7 @@ object ContentExDetect {
     env.setParallelism(1)
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
 
-    val resource = getClass.getResource("/data/20200220_10.txt")
+    val resource = getClass.getResource(ConstConfig.SRC_FILE_NAME)
     val dataStream = env.readTextFile(resource.getPath).filter(_ != null).filter(_.length > 1).filter(false == _.contains("MISSING"))
       //      .map(data => {
       //        val dataArray = data.split("\\
@@ -80,7 +80,7 @@ object ContentExDetect {
       })
       .map(new ParseSrcAuditCntMapFunction())
       .keyBy(_.src)
-      .timeWindow(Time.minutes(10), Time.minutes(10))
+      .timeWindow(Time.minutes(100), Time.minutes(100))
       .allowedLateness(Time.minutes(60))
       .aggregate(new SrcCntAggFunction(), new SrcCntWindowFunction())
       .keyBy(_.windowEnd)

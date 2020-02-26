@@ -63,4 +63,4 @@ case class SrcQiyongExCntThreshold(src: Long, lowCnt: Long, highCnt: Long, updat
   * @param highCnt    异常高位阈值，高于该值位异常
   * @param updateTs   更新时间
   */
-case class SrcQiyongExCntOutput(src: Long, currentCnt: Long, lowCnt: Long, highCnt: Long, updateTs: Date)
+case class SrcQiyongExCntOutput(src: Long, currentCnt: Long, lowCnt: Long, highCnt: Long, eventTs: Long, updateTs: Long)

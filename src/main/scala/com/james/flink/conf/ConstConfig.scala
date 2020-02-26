@@ -1,6 +1,6 @@
 package com.james.flink.conf
 
-import com.james.flink.utils.ParameterTool
+import org.apache.flink.api.java.utils.ParameterTool
 import org.slf4j.LoggerFactory
 
 /**
