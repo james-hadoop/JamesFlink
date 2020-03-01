@@ -33,7 +33,10 @@ object ContentExDetect {
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
 
     val resource = getClass.getResource(ConstConfig.SRC_FILE_NAME)
-    val dataStream = env.readTextFile(resource.getPath).filter(_ != null).filter(_.length > 1).filter(false == _.contains("MISSING"))
+    //    val dataStream = env.readTextFile(resource.getPath)
+    val dataStream = env.readTextFile("/home/james/_AllDocMap/05_Dateset/Log4620/20200223_20200224_3000.txt")
+
+      .filter(_ != null).filter(_.length > 1).filter(false == _.contains("MISSING"))
       //      .map(data => {
       //        val dataArray = data.split("\\
       //
@@ -45,7 +48,7 @@ object ContentExDetect {
       //        LOG.error("Log04620>>> " + (dataArray(0).trim, dataArray(1).trim, dataArray(2).trim, dataArray(3).trim.toLong, dataArray(4).trim, dataArray(5).trim, dataArray(6).trim, dataArray(7), dataArray(8).trim, dataArray(9).trim, dataArray(10).trim))
       //        Log04620(dataArray(0).trim, dataArray(1).trim, dataArray(2).trim, dataArray(3).trim.toLong, dataArray(4).trim, dataArray(5).trim, dataArray(6).trim, dataArray(7), dataArray(8).trim, dataArray(9).trim, dataArray(10).trim)
       //      })
-      .map(new LogFilterMap).filter(_.rowkey!="")
+      .map(new LogFilterMap).filter(_.rowkey != "")
       .assignTimestampsAndWatermarks(new BoundedOutOfOrdernessTimestampExtractor[Log04620](Time.seconds(1)) {
         override def extractTimestamp(element: Log04620): Long = {
           element.ts

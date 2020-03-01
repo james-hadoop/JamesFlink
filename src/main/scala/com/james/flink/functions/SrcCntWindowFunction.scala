@@ -21,7 +21,7 @@ class SrcCntWindowFunction() extends WindowFunction[(Long, Long, Long, Long), Sr
   override def apply(key: Long, window: TimeWindow, input: Iterable[(Long, Long, Long, Long)], out: Collector[SrcCntResult]): Unit = {
     val tuple = input.iterator.next()
 
-    LOG.debug("apply() >>>" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(window.getEnd) + " call SrcCntWindowFunction()")
+    LOG.warn("apply() >>>" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(window.getEnd) + " call SrcCntWindowFunction()")
 
     out.collect(SrcCntResult(key.toLong, tuple._1, tuple._2, tuple._3, tuple._4, window.getEnd))
   }

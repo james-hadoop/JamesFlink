@@ -71,7 +71,7 @@ class MysqlThresholdSource extends RichSourceFunction[mutable.HashMap[Long, SrcQ
 
   override def run(ctx: SourceFunction.SourceContext[mutable.HashMap[Long, SrcQiyongExCntThreshold]]): Unit = {
     try {
-      while (true) {
+//      while (true) {
         val output = new mutable.HashMap[Long, SrcQiyongExCntThreshold]();
         val rs = ps.executeQuery();
         while (rs.next()) {
@@ -88,7 +88,7 @@ class MysqlThresholdSource extends RichSourceFunction[mutable.HashMap[Long, SrcQ
 
         //每隔特定的时间更新一次阈值，当前设置是3600000毫秒，即1小时
         Thread.sleep(ConstValue.THRESHOLD_UPDATE_INTERVAL);
-      }
+//      }
     } catch {
       case ex: Exception => {
         LOG.error("failed to update threshold config")

@@ -37,7 +37,7 @@ class SrcCntKeyedProcessFunction() extends KeyedProcessFunction[Long, SrcCntResu
       val entry = iter.next()
 
       val src = entry.getKey
-      val cnt = entry.getValue
+      var cnt = entry.getValue
 
       sb.append("src=" + src + " -> cnt=" + cnt + "\n")
     }

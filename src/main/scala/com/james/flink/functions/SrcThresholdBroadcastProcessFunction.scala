@@ -37,7 +37,8 @@ class SrcThresholdBroadcastProcessFunction extends BroadcastProcessFunction[muta
       val entry = iter.next()
 //      println("\t processElement(): " + entry._1 + " -> " + entry._2)
 
-      if (null != cntThresholdMap.get(entry._1) && cntThresholdMap.get(entry._1).highCnt < entry._1) {
+//      if (null != cntThresholdMap.get(entry._1) && cntThresholdMap.get(entry._1).highCnt < entry._1) {
+      if (null != cntThresholdMap.get(entry._1)) {
         val srcQiyongEx = new SrcQiyongExCntOutput(entry._1, entry._2, cntThresholdMap.get(entry._1).lowCnt, cntThresholdMap.get(entry._1).highCnt, ctx.timestamp(), new Date().getTime)
         LOG.warn(">>> srcQiyongExCntThreshold: " + srcQiyongEx)
         out.collect(srcQiyongEx)
