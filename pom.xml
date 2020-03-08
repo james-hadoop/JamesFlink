@@ -16,7 +16,7 @@
     <scala.version>2.11.12</scala.version>
     <scala.binary.version>2.11</scala.binary.version>
     <kafka.version>2.4.0</kafka.version>
-    <zookeeper.version>3.4.10</zookeeper.version>
+    <zookeeper.version>3.4.14</zookeeper.version>
     <hive.version>2.3.4</hive.version>
 
   </properties>
