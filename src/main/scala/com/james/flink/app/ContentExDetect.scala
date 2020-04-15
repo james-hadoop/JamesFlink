@@ -33,8 +33,8 @@ object ContentExDetect {
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
 
     val resource = getClass.getResource(ConstConfig.SRC_FILE_NAME)
-    //    val dataStream = env.readTextFile(resource.getPath)
-    val dataStream = env.readTextFile("/home/james/_AllDocMap/05_Dateset/Log4620/20200223_20200224_3000.txt")
+//        val dataStream = env.readTextFile(resource.getPath)
+    val dataStream = env.readTextFile("/Users/qjiang/_AllDocMap/05_Dataset/25.txt")
 
       .filter(_ != null).filter(_.length > 1).filter(false == _.contains("MISSING"))
       //      .map(data => {
