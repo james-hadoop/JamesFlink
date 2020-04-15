@@ -22,7 +22,8 @@ public class FlinkTableDemo {
 //            list.add(wc);
 //        }
 //        DataSet<WC> input = env.fromCollection(list);
-        String filePath = "/Users/qjiang/workspace/JamesFlink/src/main/resources/data/wc.csv";
+//        String filePath = "/Users/qjiang/workspace/JamesFlink/src/main/resources/data/wc.csv";
+        String filePath = "/home/james/workspace/JamesFlink/src/main/resources/data/wc.csv";
 //        james,1
 //        flink,2
 //        hello,3
@@ -36,7 +37,7 @@ public class FlinkTableDemo {
                 return wc;
             }
         });
-        tEnv.createTemporaryView("WordCount", input, "word, frequency");
+        tEnv.registerDataSet("WordCount", input, "word, frequency");
         Table table = tEnv.sqlQuery(
                 "SELECT word, SUM(frequency) as frequency FROM WordCount GROUP BY word");
         DataSet<WC> result = tEnv.toDataSet(table, WC.class);
