@@ -23,6 +23,11 @@ public class FlinkTableDemo {
 //        }
 //        DataSet<WC> input = env.fromCollection(list);
         String filePath = "/Users/qjiang/workspace/JamesFlink/src/main/resources/data/wc.csv";
+//        james,1
+//        flink,2
+//        hello,3
+//        bye,1
+//        spark,3
         DataSet<WC> input = env.readTextFile(filePath).map(new MapFunction<String, WC>() {
             @Override
             public WC map(String s) throws Exception {
